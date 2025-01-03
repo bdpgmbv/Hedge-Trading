@@ -8,3 +8,4 @@ dependencyResolutionManagement {
 }
 
 include(":modules:domain")
+include(":modules:generator")
