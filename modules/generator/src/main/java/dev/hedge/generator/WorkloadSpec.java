@@ -20,6 +20,10 @@ public record WorkloadSpec(
         if (currencies.isEmpty()) {
             throw new IllegalArgumentException("at least one currency is required");
         }
+        if (positionsPerAccount > securities) {
+            throw new IllegalArgumentException("an account cannot hold " + positionsPerAccount
+                    + " distinct securities when only " + securities + " exist");
+        }
     }
 
     public static WorkloadSpec tiny(long seed) {

@@ -17,6 +17,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public final class PortfolioGenerator {
 
@@ -52,10 +54,12 @@ public final class PortfolioGenerator {
         List<Account> accounts = new ArrayList<>(spec.accountsPerFund());
         for (int accountIndex = 0; accountIndex < spec.accountsPerFund(); accountIndex++) {
             AccountId accountId = AccountId.of(String.format("ACC-%05d-%03d", fundIndex, accountIndex));
+            List<SecurityId> available = new ArrayList<>(securities);
+            Collections.shuffle(available, random);
             List<Position> positions = new ArrayList<>(spec.positionsPerAccount());
             for (int i = 0; i < spec.positionsPerAccount(); i++) {
-                SecurityId security = securities.get(random.nextInt(securities.size()));
-                positions.add(new Position(accountId, security, Quantity.of(String.valueOf(1 + random.nextInt(1000)))));
+                positions.add(new Position(
+                        accountId, available.get(i), Quantity.of(String.valueOf(1 + random.nextInt(1000)))));
             }
             Currency cashCurrency = Currency.getInstance(spec.currencies().get(random.nextInt(spec.currencies().size())));
             accounts.add(new Account(accountId, positions, List.of(amount(random, cashCurrency, 1_000, 100_000))));

@@ -46,4 +46,12 @@ class WorkloadSpecTest {
         assertThat(WorkloadSpec.tiny(1).totalPositions()).isEqualTo(6);
         assertThat(WorkloadSpec.typical(1).totalPositions()).isEqualTo(2000);
     }
+
+    @Test
+    @DisplayName("asking for more positions per account than there are securities is refused")
+    void a_workload_cannot_ask_for_impossible_positions() {
+        assertThatThrownBy(() -> new WorkloadSpec(1, 1, 1, 10, 5, List.of("USD")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("cannot hold 10 distinct securities when only 5 exist");
+    }
 }

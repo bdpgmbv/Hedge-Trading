@@ -1,3 +1,7 @@
+pluginManagement {
+    includeBuild("build-logic")
+}
+
 rootProject.name = "hedge-trading"
 
 dependencyResolutionManagement {
@@ -9,3 +13,5 @@ dependencyResolutionManagement {
 
 include(":modules:domain")
 include(":modules:generator")
+include(":modules:persistence")
+include(":applications:hedge-api")

@@ -58,4 +58,39 @@ class FundTest {
                 .isInstanceOf(NullPointerException.class)
                 .hasMessageContaining("base currency");
     }
+
+    @Test
+    @DisplayName("one account cannot hold the same security twice, because a position is the whole holding")
+    void a_security_cannot_appear_twice_in_one_account() {
+        assertThatThrownBy(() -> new Account(
+                ACCOUNT,
+                List.of(
+                        new Position(ACCOUNT, SecurityId.of("S-1"), Quantity.of("10")),
+                        new Position(ACCOUNT, SecurityId.of("S-1"), Quantity.of("20"))),
+                List.of()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("twice");
+    }
+
+    @Test
+    @DisplayName("one account cannot hold two balances in the same currency")
+    void a_currency_cannot_appear_twice_in_one_account() {
+        assertThatThrownBy(() -> new Account(
+                ACCOUNT, List.of(), List.of(Money.of("1.00", "USD"), Money.of("2.00", "USD"))))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("cash twice");
+    }
+
+    @Test
+    @DisplayName("the same holdings in a different order are the same account")
+    void positions_are_stored_in_one_fixed_order() {
+        Position first = new Position(ACCOUNT, SecurityId.of("S-1"), Quantity.of("10"));
+        Position second = new Position(ACCOUNT, SecurityId.of("S-2"), Quantity.of("20"));
+
+        Account oneWay = new Account(ACCOUNT, List.of(first, second), List.of());
+        Account otherWay = new Account(ACCOUNT, List.of(second, first), List.of());
+
+        assertThat(oneWay).isEqualTo(otherWay);
+        assertThat(oneWay.positions()).containsExactly(first, second);
+    }
 }

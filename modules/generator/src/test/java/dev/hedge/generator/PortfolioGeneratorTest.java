@@ -96,4 +96,18 @@ class PortfolioGeneratorTest {
         assertThat(portfolio.rates())
                 .allSatisfy(rate -> assertThat(rate.quote().getCurrencyCode()).isEqualTo("USD"));
     }
+
+    @Test
+    @DisplayName("an account never holds the same security twice")
+    void securities_are_distinct_within_an_account() {
+        GeneratedPortfolio portfolio = generator.generate(WorkloadSpec.typical(99));
+
+        for (Fund fund : portfolio.funds()) {
+            for (Account account : fund.accounts()) {
+                assertThat(account.positions())
+                        .extracting(Position::securityId)
+                        .doesNotHaveDuplicates();
+            }
+        }
+    }
 }
