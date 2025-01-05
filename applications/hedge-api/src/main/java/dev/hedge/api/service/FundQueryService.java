@@ -1,25 +1,26 @@
-package dev.hedge.api;
+package dev.hedge.api.service;
 
-import dev.hedge.api.ApiResponses.FundResponse;
-import dev.hedge.api.ApiResponses.PageResponse;
-import dev.hedge.api.ApiResponses.PositionResponse;
+import dev.hedge.api.dto.FundResponse;
+import dev.hedge.api.dto.PageResponse;
+import dev.hedge.api.dto.PositionResponse;
+import dev.hedge.api.error.FundNotFoundException;
 import dev.hedge.domain.FundId;
 import dev.hedge.persistence.FundRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-class FundQueryService {
+public class FundQueryService {
 
     private final FundRepository repository;
     private final int maximumPageSize;
 
-    FundQueryService(FundRepository repository, @Value("${hedge.api.max-page-size}") int maximumPageSize) {
+    public FundQueryService(FundRepository repository, @Value("${hedge.api.max-page-size}") int maximumPageSize) {
         this.repository = repository;
         this.maximumPageSize = maximumPageSize;
     }
 
-    FundResponse fund(String rawFundId) {
+    public FundResponse fund(String rawFundId) {
         FundId fundId = FundId.of(rawFundId);
         return repository
                 .findById(fundId)
@@ -27,7 +28,7 @@ class FundQueryService {
                 .orElseThrow(() -> new FundNotFoundException(rawFundId));
     }
 
-    PageResponse<PositionResponse> positions(String rawFundId, int page, int size) {
+    public PageResponse<PositionResponse> positions(String rawFundId, int page, int size) {
         FundId fundId = FundId.of(rawFundId);
         requirePageIsValid(page, size);
 

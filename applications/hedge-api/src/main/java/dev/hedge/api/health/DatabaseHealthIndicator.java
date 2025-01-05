@@ -1,4 +1,4 @@
-package dev.hedge.api;
+package dev.hedge.api.health;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

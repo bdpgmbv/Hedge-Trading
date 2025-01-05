@@ -1,8 +1,9 @@
-package dev.hedge.api;
+package dev.hedge.api.controller;
 
-import dev.hedge.api.ApiResponses.FundResponse;
-import dev.hedge.api.ApiResponses.PageResponse;
-import dev.hedge.api.ApiResponses.PositionResponse;
+import dev.hedge.api.dto.FundResponse;
+import dev.hedge.api.dto.PageResponse;
+import dev.hedge.api.dto.PositionResponse;
+import dev.hedge.api.service.FundQueryService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

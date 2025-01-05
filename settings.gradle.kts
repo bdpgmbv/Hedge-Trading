@@ -13,5 +13,6 @@ dependencyResolutionManagement {
 
 include(":modules:domain")
 include(":modules:generator")
+include(":modules:calculation")
 include(":modules:persistence")
 include(":applications:hedge-api")

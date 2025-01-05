@@ -1,4 +1,4 @@
-package dev.hedge.api;
+package dev.hedge.api.error;
 
 import dev.hedge.persistence.PersistenceException;
 import org.slf4j.Logger;

@@ -1,4 +1,4 @@
-package dev.hedge.api;
+package dev.hedge.api.config;
 
 import dev.hedge.persistence.DataSources;
 import dev.hedge.persistence.FundRepository;

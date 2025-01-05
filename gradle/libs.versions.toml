@@ -8,6 +8,8 @@ liquibase = "5.0.4"
 hikari = "7.1.0"
 springBoot = "4.1.1"
 micrometer = "1.17.1"
+jqwik = "1.9.3"
+jmh = "1.37"
 
 [libraries]
 junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
@@ -25,6 +27,9 @@ spring-boot-starter-actuator = { module = "org.springframework.boot:spring-boot-
 spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test" }
 micrometer-registry-prometheus = { module = "io.micrometer:micrometer-registry-prometheus" }
 micrometer-core = { module = "io.micrometer:micrometer-core", version.ref = "micrometer" }
+jqwik = { module = "net.jqwik:jqwik", version.ref = "jqwik" }
+jmh-core = { module = "org.openjdk.jmh:jmh-core", version.ref = "jmh" }
+jmh-generator-annprocess = { module = "org.openjdk.jmh:jmh-generator-annprocess", version.ref = "jmh" }
 
 [plugins]
 spring-boot = { id = "org.springframework.boot", version.ref = "springBoot" }
