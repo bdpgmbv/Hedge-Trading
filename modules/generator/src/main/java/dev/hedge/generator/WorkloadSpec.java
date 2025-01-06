@@ -2,7 +2,6 @@ package dev.hedge.generator;
 
 import java.util.List;
 import java.util.Objects;
-
 public record WorkloadSpec(
         long seed,
         int funds,

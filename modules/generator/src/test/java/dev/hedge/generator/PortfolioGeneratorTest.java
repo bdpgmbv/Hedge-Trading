@@ -2,13 +2,12 @@ package dev.hedge.generator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import dev.hedge.domain.Account;
-import dev.hedge.domain.Fund;
-import dev.hedge.domain.Position;
+import dev.hedge.domain.portfolio.Account;
+import dev.hedge.domain.portfolio.Fund;
+import dev.hedge.domain.portfolio.Position;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 class PortfolioGeneratorTest {
 
     private final PortfolioGenerator generator = new PortfolioGenerator();

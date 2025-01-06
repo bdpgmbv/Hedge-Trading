@@ -1,7 +1,6 @@
 package dev.hedge.api.dto;
 
-import dev.hedge.domain.Money;
-
+import dev.hedge.domain.money.Money;
 public record MoneyResponse(String amount, String currency) {
 
     public static MoneyResponse from(Money money) {

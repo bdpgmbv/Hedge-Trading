@@ -1,11 +1,10 @@
 package dev.hedge.persistence;
 
-import dev.hedge.domain.Fund;
+import dev.hedge.domain.portfolio.Fund;
 import dev.hedge.generator.PortfolioGenerator;
 import dev.hedge.generator.WorkloadSpec;
 import javax.sql.DataSource;
 import org.junit.jupiter.api.Test;
-
 class DbProbe {
 
     @Test

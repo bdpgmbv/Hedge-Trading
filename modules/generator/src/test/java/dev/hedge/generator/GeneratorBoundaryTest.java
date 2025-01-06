@@ -6,7 +6,6 @@ import com.tngtech.archunit.core.importer.ImportOption;
 import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
 import com.tngtech.archunit.lang.ArchRule;
-
 @AnalyzeClasses(packages = "dev.hedge.generator", importOptions = ImportOption.DoNotIncludeTests.class)
 class GeneratorBoundaryTest {
 

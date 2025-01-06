@@ -1,8 +1,7 @@
 package dev.hedge.api.dto;
 
-import dev.hedge.domain.Account;
+import dev.hedge.domain.portfolio.Account;
 import java.util.List;
-
 public record AccountResponse(
         String accountId, List<PositionResponse> positions, List<MoneyResponse> cash) {
 

@@ -3,24 +3,23 @@ package dev.hedge.persistence;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import javax.sql.DataSource;          // replaces the HikariDataSource import
-import dev.hedge.domain.Account;
-import dev.hedge.domain.AccountId;
-import dev.hedge.domain.Fund;
-import dev.hedge.domain.FundId;
-import dev.hedge.domain.Money;
-import dev.hedge.domain.Position;
-import dev.hedge.domain.Quantity;
-import dev.hedge.domain.SecurityId;
+import dev.hedge.domain.id.AccountId;
+import dev.hedge.domain.id.FundId;
+import dev.hedge.domain.id.SecurityId;
+import dev.hedge.domain.money.Money;
+import dev.hedge.domain.money.Quantity;
+import dev.hedge.domain.portfolio.Account;
+import dev.hedge.domain.portfolio.Fund;
+import dev.hedge.domain.portfolio.Position;
 import java.util.Currency;
 import java.util.List;
 import java.util.Optional;
+import javax.sql.DataSource;          // replaces the HikariDataSource import
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 class FundRepositoryTest {
 
     private static final Currency USD = Currency.getInstance("USD");

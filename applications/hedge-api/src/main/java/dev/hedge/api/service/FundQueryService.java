@@ -4,11 +4,10 @@ import dev.hedge.api.dto.FundResponse;
 import dev.hedge.api.dto.PageResponse;
 import dev.hedge.api.dto.PositionResponse;
 import dev.hedge.api.error.FundNotFoundException;
-import dev.hedge.domain.FundId;
+import dev.hedge.domain.id.FundId;
 import dev.hedge.persistence.FundRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
 @Service
 public class FundQueryService {
 

@@ -9,7 +9,6 @@ import liquibase.database.Database;
 import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.resource.ClassLoaderResourceAccessor;
-
 public final class SchemaMigrator {
 
     private static final String CHANGELOG = "db/changelog/db.changelog-master.sql";

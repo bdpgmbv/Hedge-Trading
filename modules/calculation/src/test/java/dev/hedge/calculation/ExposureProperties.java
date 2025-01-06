@@ -2,20 +2,21 @@ package dev.hedge.calculation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import dev.hedge.domain.Account;
-import dev.hedge.domain.AccountId;
-import dev.hedge.domain.CurrencyExposure;
-import dev.hedge.domain.Forward;
-import dev.hedge.domain.ForwardId;
-import dev.hedge.domain.Fund;
-import dev.hedge.domain.FundId;
-import dev.hedge.domain.HedgePolicy;
-import dev.hedge.domain.HedgeRequirement;
-import dev.hedge.domain.Money;
-import dev.hedge.domain.PortfolioExposure;
-import dev.hedge.domain.Position;
-import dev.hedge.domain.Quantity;
-import dev.hedge.domain.SecurityId;
+import dev.hedge.calculation.full.FullExposureCalculator;
+import dev.hedge.domain.exposure.CurrencyExposure;
+import dev.hedge.domain.exposure.HedgePolicy;
+import dev.hedge.domain.exposure.HedgeRequirement;
+import dev.hedge.domain.exposure.PortfolioExposure;
+import dev.hedge.domain.id.AccountId;
+import dev.hedge.domain.id.ForwardId;
+import dev.hedge.domain.id.FundId;
+import dev.hedge.domain.id.SecurityId;
+import dev.hedge.domain.money.Money;
+import dev.hedge.domain.money.Quantity;
+import dev.hedge.domain.portfolio.Account;
+import dev.hedge.domain.portfolio.Forward;
+import dev.hedge.domain.portfolio.Fund;
+import dev.hedge.domain.portfolio.Position;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,6 @@ import net.jqwik.api.Arbitrary;
 import net.jqwik.api.ForAll;
 import net.jqwik.api.Property;
 import net.jqwik.api.Provide;
-
 /**
  * Example tests show that known cases are right. These say what must hold for every portfolio the
  * generator can produce. They are also the machinery Phase 3 needs, when the claim to prove becomes
@@ -33,7 +33,7 @@ import net.jqwik.api.Provide;
 class ExposureProperties {
 
     private static final MarketSnapshot MARKET = TestMarket.snapshot();
-    private static final ExposureCalculator CALCULATOR = new ExposureCalculator();
+    private static final FullExposureCalculator CALCULATOR = new FullExposureCalculator();
     private static final LocalDate TODAY = LocalDate.of(2026, 1, 15);
 
     @Property

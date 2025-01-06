@@ -8,7 +8,6 @@ import javax.sql.DataSource;
 import org.springframework.boot.health.contributor.Health;
 import org.springframework.boot.health.contributor.HealthIndicator;
 import org.springframework.stereotype.Component;
-
 @Component("db")
 class DatabaseHealthIndicator implements HealthIndicator {
 

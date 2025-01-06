@@ -1,9 +1,8 @@
 package dev.hedge.generator;
 
-import dev.hedge.domain.Fund;
+import dev.hedge.domain.portfolio.Fund;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-
 class GenProbe {
     @Test
     void run() {

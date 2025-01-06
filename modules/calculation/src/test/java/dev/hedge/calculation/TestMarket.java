@@ -1,30 +1,29 @@
 package dev.hedge.calculation;
 
-import dev.hedge.domain.ExposureWeight;
-import dev.hedge.domain.FxRate;
-import dev.hedge.domain.Price;
-import dev.hedge.domain.Security;
-import dev.hedge.domain.SecurityId;
+import dev.hedge.domain.id.SecurityId;
+import dev.hedge.domain.money.FxRate;
+import dev.hedge.domain.money.Price;
+import dev.hedge.domain.portfolio.ExposureWeight;
+import dev.hedge.domain.portfolio.Security;
 import java.util.Currency;
 import java.util.List;
-
 /** A small fixed market, shared by the example tests and the properties. */
-final class TestMarket {
+public final class TestMarket {
 
-    static final Currency USD = Currency.getInstance("USD");
-    static final Currency EUR = Currency.getInstance("EUR");
-    static final Currency JPY = Currency.getInstance("JPY");
+    public static final Currency USD = Currency.getInstance("USD");
+    public static final Currency EUR = Currency.getInstance("EUR");
+    public static final Currency JPY = Currency.getInstance("JPY");
 
-    static final SecurityId US_STOCK = SecurityId.of("SEC-US");
-    static final SecurityId EU_STOCK = SecurityId.of("SEC-EU");
-    static final SecurityId JP_STOCK = SecurityId.of("SEC-JP");
-    static final SecurityId GLOBAL_ETF = SecurityId.of("SEC-ETF");
+    public static final SecurityId US_STOCK = SecurityId.of("SEC-US");
+    public static final SecurityId EU_STOCK = SecurityId.of("SEC-EU");
+    public static final SecurityId JP_STOCK = SecurityId.of("SEC-JP");
+    public static final SecurityId GLOBAL_ETF = SecurityId.of("SEC-ETF");
 
-    static final List<SecurityId> UNIVERSE = List.of(US_STOCK, EU_STOCK, JP_STOCK, GLOBAL_ETF);
+    public static final List<SecurityId> UNIVERSE = List.of(US_STOCK, EU_STOCK, JP_STOCK, GLOBAL_ETF);
 
     private TestMarket() {}
 
-    static MarketSnapshot snapshot() {
+    public static MarketSnapshot snapshot() {
         return MarketSnapshot.builder()
                 .security(Security.denominatedIn(US_STOCK, "USD"))
                 .security(Security.denominatedIn(EU_STOCK, "EUR"))

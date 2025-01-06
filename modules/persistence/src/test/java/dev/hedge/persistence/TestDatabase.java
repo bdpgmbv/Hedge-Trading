@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.sql.DataSource;
-
 final class TestDatabase {
 
     private static final String DEFAULT_URL = "jdbc:postgresql://localhost:5432/hedge_trading_test";

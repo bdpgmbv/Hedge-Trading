@@ -1,17 +1,16 @@
 package dev.hedge.calculation;
 
-import dev.hedge.domain.FxRate;
-import dev.hedge.domain.Money;
-import dev.hedge.domain.Price;
-import dev.hedge.domain.Security;
-import dev.hedge.domain.SecurityId;
+import dev.hedge.domain.id.SecurityId;
+import dev.hedge.domain.money.FxRate;
+import dev.hedge.domain.money.Money;
+import dev.hedge.domain.money.Price;
+import dev.hedge.domain.portfolio.Security;
 import java.math.RoundingMode;
 import java.util.Currency;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
 /**
  * An immutable view of everything the calculator needs from the market: what each security is, what
  * it costs, and how to move an amount between currencies. Built once and read many times, so every

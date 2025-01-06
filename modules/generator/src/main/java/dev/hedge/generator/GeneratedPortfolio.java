@@ -1,13 +1,12 @@
 package dev.hedge.generator;
 
-import dev.hedge.domain.Fund;
-import dev.hedge.domain.FxRate;
-import dev.hedge.domain.Money;
-import dev.hedge.domain.SecurityId;
+import dev.hedge.domain.id.SecurityId;
+import dev.hedge.domain.money.FxRate;
+import dev.hedge.domain.money.Money;
+import dev.hedge.domain.portfolio.Fund;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
 public record GeneratedPortfolio(List<Fund> funds, Map<SecurityId, Money> prices, List<FxRate> rates) {
 
     public GeneratedPortfolio {

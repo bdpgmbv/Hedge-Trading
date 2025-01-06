@@ -1,12 +1,11 @@
 package dev.hedge.generator;
 
-import dev.hedge.domain.Forward;
-import dev.hedge.domain.FxRate;
-import dev.hedge.domain.Price;
-import dev.hedge.domain.Security;
+import dev.hedge.domain.money.FxRate;
+import dev.hedge.domain.money.Price;
+import dev.hedge.domain.portfolio.Forward;
+import dev.hedge.domain.portfolio.Security;
 import java.util.List;
 import java.util.Objects;
-
 public record GeneratedMarket(
         List<Security> securities, List<Price> prices, List<FxRate> rates, List<Forward> forwards) {
 

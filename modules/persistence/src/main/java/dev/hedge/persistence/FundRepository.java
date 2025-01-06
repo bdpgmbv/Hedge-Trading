@@ -1,13 +1,13 @@
 package dev.hedge.persistence;
 
-import dev.hedge.domain.Account;
-import dev.hedge.domain.AccountId;
-import dev.hedge.domain.Fund;
-import dev.hedge.domain.FundId;
-import dev.hedge.domain.Money;
-import dev.hedge.domain.Position;
-import dev.hedge.domain.Quantity;
-import dev.hedge.domain.SecurityId;
+import dev.hedge.domain.id.AccountId;
+import dev.hedge.domain.id.FundId;
+import dev.hedge.domain.id.SecurityId;
+import dev.hedge.domain.money.Money;
+import dev.hedge.domain.money.Quantity;
+import dev.hedge.domain.portfolio.Account;
+import dev.hedge.domain.portfolio.Fund;
+import dev.hedge.domain.portfolio.Position;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,7 +20,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import javax.sql.DataSource;
-
 public final class FundRepository {
 
     private final DataSource dataSource;

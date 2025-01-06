@@ -1,25 +1,23 @@
 package dev.hedge.generator;
 
-import dev.hedge.domain.Account;
-import dev.hedge.domain.AccountId;
-import dev.hedge.domain.Fund;
-import dev.hedge.domain.FundId;
-import dev.hedge.domain.FxRate;
-import dev.hedge.domain.Money;
-import dev.hedge.domain.Position;
-import dev.hedge.domain.Quantity;
-import dev.hedge.domain.SecurityId;
+import dev.hedge.domain.id.AccountId;
+import dev.hedge.domain.id.FundId;
+import dev.hedge.domain.id.SecurityId;
+import dev.hedge.domain.money.FxRate;
+import dev.hedge.domain.money.Money;
+import dev.hedge.domain.money.Quantity;
+import dev.hedge.domain.portfolio.Account;
+import dev.hedge.domain.portfolio.Fund;
+import dev.hedge.domain.portfolio.Position;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Currency;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.ArrayList;
-import java.util.Collections;
-
 public final class PortfolioGenerator {
 
 //    private static final Random SHARED = new Random(42);

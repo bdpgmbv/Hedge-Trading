@@ -1,8 +1,7 @@
 package dev.hedge.api.dto;
 
-import dev.hedge.domain.Fund;
+import dev.hedge.domain.portfolio.Fund;
 import java.util.List;
-
 public record FundResponse(
         String fundId, String baseCurrency, int positionCount, List<AccountResponse> accounts) {
 

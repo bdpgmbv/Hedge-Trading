@@ -1,5 +1,4 @@
 package dev.hedge.calculation;
-
 public class CalculationException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;

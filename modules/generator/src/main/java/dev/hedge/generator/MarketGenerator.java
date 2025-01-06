@@ -1,12 +1,12 @@
 package dev.hedge.generator;
 
-import dev.hedge.domain.Forward;
-import dev.hedge.domain.ForwardId;
-import dev.hedge.domain.FxRate;
-import dev.hedge.domain.Money;
-import dev.hedge.domain.Price;
-import dev.hedge.domain.Security;
-import dev.hedge.domain.SecurityId;
+import dev.hedge.domain.id.ForwardId;
+import dev.hedge.domain.id.SecurityId;
+import dev.hedge.domain.money.FxRate;
+import dev.hedge.domain.money.Money;
+import dev.hedge.domain.money.Price;
+import dev.hedge.domain.portfolio.Forward;
+import dev.hedge.domain.portfolio.Security;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 import java.util.Random;
-
 /**
  * Produces the market data that matches a {@link WorkloadSpec}: one definition and one price for
  * every security {@link PortfolioGenerator} can reference, a rate from every currency to the base,

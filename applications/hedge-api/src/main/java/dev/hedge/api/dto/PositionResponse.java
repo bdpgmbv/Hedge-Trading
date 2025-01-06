@@ -1,7 +1,6 @@
 package dev.hedge.api.dto;
 
-import dev.hedge.domain.Position;
-
+import dev.hedge.domain.portfolio.Position;
 public record PositionResponse(String securityId, String quantity) {
 
     public static PositionResponse from(Position position) {

@@ -2,7 +2,7 @@ package dev.hedge.api;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import dev.hedge.domain.Fund;
+import dev.hedge.domain.portfolio.Fund;
 import dev.hedge.generator.PortfolioGenerator;
 import dev.hedge.generator.WorkloadSpec;
 import dev.hedge.persistence.FundRepository;
@@ -17,7 +17,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class FundControllerTest {
 
