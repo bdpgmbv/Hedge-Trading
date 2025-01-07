@@ -10,7 +10,8 @@ import java.util.Optional;
  * that sold everything after line 4,000. Comparing a declared count from the trailer against what
  * was parsed is the cheapest control that catches it.
  */
-public record BatchCompleteness(Optional<Integer> declaredCount, int parsedCount, Optional<String> problem) {
+public record BatchCompleteness(
+        Optional<Integer> declaredCount, int parsedCount, Optional<String> problem, boolean quarantined) {
 
     public BatchCompleteness {
         Objects.requireNonNull(declaredCount, "declaredCount must be present or empty, never null");
@@ -26,18 +27,27 @@ public record BatchCompleteness(Optional<Integer> declaredCount, int parsedCount
                     Optional.of(declared),
                     parsed,
                     Optional.of("the trailer declared " + declared + " records but " + parsed
-                            + " were parsed, so the batch is incomplete or malformed"));
+                            + " were parsed, so the batch is incomplete or malformed"),
+                    false);
         }
-        return new BatchCompleteness(Optional.of(declared), parsed, Optional.empty());
+        return new BatchCompleteness(Optional.of(declared), parsed, Optional.empty(), false);
     }
 
     /** For providers whose format carries no trailer; completeness simply cannot be checked. */
     public static BatchCompleteness unverifiable(int parsed) {
-        return new BatchCompleteness(Optional.empty(), parsed, Optional.empty());
+        return new BatchCompleteness(Optional.empty(), parsed, Optional.empty(), false);
+    }
+
+    /**
+     * The provider sent a kind of observation it is not permitted to supply — a custodian quoting
+     * a price, for instance. The evidence is still stored, but nothing downstream may interpret it.
+     */
+    public static BatchCompleteness quarantine(int parsed, String problem) {
+        return new BatchCompleteness(Optional.empty(), parsed, Optional.of(problem), true);
     }
 
     public static BatchCompleteness malformed(int parsed, String problem) {
-        return new BatchCompleteness(Optional.empty(), parsed, Optional.of(problem));
+        return new BatchCompleteness(Optional.empty(), parsed, Optional.of(problem), false);
     }
 
     public boolean isComplete() {

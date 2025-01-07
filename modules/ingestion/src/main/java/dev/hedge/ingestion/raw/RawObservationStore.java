@@ -75,7 +75,7 @@ public final class RawObservationStore {
         Objects.requireNonNull(batch, "a batch is required");
         ProviderId provider = batch.source().provider();
         BatchId batchId = RawIds.batchId(provider, batch.artifact().sha256());
-        BatchStatus status = batch.completeness().isComplete() ? BatchStatus.ACCEPTED : BatchStatus.INCOMPLETE;
+        BatchStatus status = statusOf(batch);
 
         StoredBatch stored = new StoredBatch(
                 batchId,
@@ -226,6 +226,13 @@ public final class RawObservationStore {
             throw new IngestionException("could not list batches", failure);
         }
         return batches;
+    }
+
+    private static BatchStatus statusOf(RawBatch batch) {
+        if (batch.completeness().quarantined()) {
+            return BatchStatus.QUARANTINED;
+        }
+        return batch.completeness().isComplete() ? BatchStatus.ACCEPTED : BatchStatus.INCOMPLETE;
     }
 
     private static boolean isUniqueViolation(SQLException failure) {
