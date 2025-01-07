@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!--
+      The original file keeps its name and path forever. Liquibase identifies a changeset by
+      (id, author, filename); moving the first five changesets into a renamed file would make them
+      look unknown, and it would try to create the funds table again on every existing database.
+    -->
+    <include file="db/changelog/db.changelog-master.sql"/>
+    <include file="db/changelog/002-raw-observations.sql"/>
+</databaseChangeLog>

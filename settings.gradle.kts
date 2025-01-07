@@ -14,5 +14,8 @@ dependencyResolutionManagement {
 include(":modules:domain")
 include(":modules:generator")
 include(":modules:calculation")
+include(":modules:ingestion")
+include(":modules:reconciliation")
 include(":modules:persistence")
 include(":applications:hedge-api")
+include(":applications:hedge-ingestor")
