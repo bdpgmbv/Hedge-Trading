@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import dev.hedge.ingestion.provider.CustodianACsvSource;
 import dev.hedge.ingestion.provider.CustodianBJsonSource;
+import dev.hedge.ingestion.provider.CustodianCChunkedSource;
+import dev.hedge.ingestion.provider.CustodianDFixSource;
 import dev.hedge.ingestion.provider.VendorMarketDataSource;
 import dev.hedge.ingestion.source.Artifact;
 import dev.hedge.ingestion.source.DeliveryStyle;
@@ -24,6 +26,8 @@ class ProviderAdapterTest {
 
     private final CustodianACsvSource custodianA = new CustodianACsvSource();
     private final CustodianBJsonSource custodianB = new CustodianBJsonSource();
+    private final CustodianCChunkedSource custodianC = new CustodianCChunkedSource();
+    private final CustodianDFixSource custodianD = new CustodianDFixSource();
     private final VendorMarketDataSource vendorA = new VendorMarketDataSource("VENDOR_A");
 
     // ---------- Custodian A, CSV snapshot, CUSIP, trailer ----------
@@ -152,6 +156,88 @@ class ProviderAdapterTest {
 
         assertThat(batch.completeness().quarantined()).isTrue();
         assertThat(batch.completeness().problem().orElseThrow()).contains("may only");
+    }
+
+
+    // ---------- Custodian C, chunked, provider-specific ids ----------
+
+    @Test
+    @DisplayName("custodian C: a chunk parses and remembers its place in the day")
+    void custodian_c_reads_a_chunk() {
+        RawBatch batch = custodianC.read(Artifact.of("c-1.txt", """
+                #CHUNK 1/3 CUSTODIAN_C 2026-10-13T21:00:00Z
+                P|CPROV-7781|ACCT9900|412.5
+                P|CPROV-7782|ACCT9900|88
+                #ENDCHUNK 2
+                """), RECEIVED);
+
+        assertThat(batch.completeness().isComplete()).isTrue();
+        assertThat(batch.size()).isEqualTo(2);
+        assertThat(batch.batchSequence()).contains("1/3");
+        assertThat(batch.records().get(0).payload()).isEqualTo("ACCT9900,CPROV-7781,412.5");
+    }
+
+    @Test
+    @DisplayName("custodian C: a chunk with no terminator may have been cut short")
+    void custodian_c_requires_a_terminator() {
+        RawBatch batch = custodianC.read(Artifact.of("c-cut.txt", """
+                #CHUNK 2/3 CUSTODIAN_C 2026-10-13T21:00:00Z
+                P|CPROV-7781|ACCT9900|412.5
+                """), RECEIVED);
+
+        assertThat(batch.completeness().problem().orElseThrow()).contains("cut short");
+        assertThat(batch.batchSequence()).contains("2/3");
+    }
+
+    // ---------- Custodian D, FIX execution reports ----------
+
+    @Test
+    @DisplayName("custodian D: a filled execution report becomes a position change")
+    void custodian_d_reads_a_fill() {
+        RawBatch batch = custodianD.read(Artifact.of("d.fix",
+                "8=FIX.4.4|35=8|49=CUSTODIAN_D|34=1021|52=20261013-21:00:00|"
+                        + "48=459200101|22=1|54=1|32=100|31=184.52|39=2|150=F|1=ACCT9900|17=EXEC-1|"),
+                RECEIVED);
+
+        assertThat(batch.size()).isEqualTo(1);
+        assertThat(batch.records().get(0).payload()).isEqualTo("ACCT9900,459200101,1,100");
+        assertThat(batch.records().get(0).providerRecordId()).contains("EXEC-1");
+        assertThat(batch.records().get(0).providerVersion()).contains("1021");
+        assertThat(batch.records().get(0).effectiveAt())
+                .isEqualTo(Instant.parse("2026-10-13T21:00:00Z"));
+    }
+
+    @Test
+    @DisplayName("custodian D: a sell is carried as a negative quantity")
+    void custodian_d_signs_a_sell() {
+        RawBatch batch = custodianD.read(Artifact.of("d-sell.fix",
+                "8=FIX.4.4|35=8|34=1022|52=20261013-21:05:00|48=459200101|22=1|54=2|32=40|39=2|150=F|1=ACCT9900|"),
+                RECEIVED);
+
+        assertThat(batch.records().get(0).payload()).isEqualTo("ACCT9900,459200101,1,-40");
+    }
+
+    @Test
+    @DisplayName("custodian D: heartbeats and unfilled orders carry no position and are skipped")
+    void custodian_d_ignores_everything_that_is_not_a_fill() {
+        RawBatch batch = custodianD.read(Artifact.of("d-noise.fix",
+                "8=FIX.4.4|35=0|34=1|52=20261013-21:00:00|\n"
+                        + "8=FIX.4.4|35=D|34=2|52=20261013-21:00:01|55=IBM|54=1|38=100|\n"
+                        + "8=FIX.4.4|35=8|34=3|52=20261013-21:00:02|150=0|39=0|48=459200101|22=1|32=0|1=ACCT9900|"),
+                RECEIVED);
+
+        assertThat(batch.size()).isZero();
+    }
+
+    @Test
+    @DisplayName("custodian D: completeness is unknown, because the session layer is not implemented")
+    void custodian_d_cannot_verify_completeness() {
+        RawBatch batch = custodianD.read(Artifact.of("d.fix",
+                "8=FIX.4.4|35=8|34=1|52=20261013-21:00:00|48=X|22=1|54=1|32=1|39=2|150=F|1=A|"),
+                RECEIVED);
+
+        assertThat(batch.completeness().declaredCount()).isEmpty();
+        assertThat(batch.completeness().isComplete()).isTrue();
     }
 
     @Test

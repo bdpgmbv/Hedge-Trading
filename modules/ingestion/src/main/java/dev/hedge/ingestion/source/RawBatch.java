@@ -3,6 +3,7 @@ package dev.hedge.ingestion.source;
 import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /** Everything one delivered artifact produced, before any interpretation. */
 public record RawBatch(
@@ -10,9 +11,21 @@ public record RawBatch(
         Artifact artifact,
         Instant receivedAt,
         List<RawRecord> records,
-        BatchCompleteness completeness) {
+        BatchCompleteness completeness,
+        Optional<String> batchSequence) {
+
+    /** For providers whose delivery carries no sequence of its own. */
+    public RawBatch(
+            SourceDescriptor source,
+            Artifact artifact,
+            Instant receivedAt,
+            List<RawRecord> records,
+            BatchCompleteness completeness) {
+        this(source, artifact, receivedAt, records, completeness, Optional.empty());
+    }
 
     public RawBatch {
+        Objects.requireNonNull(batchSequence, "batchSequence must be present or empty, never null");
         Objects.requireNonNull(source, "a batch needs its source");
         Objects.requireNonNull(artifact, "a batch needs its artifact");
         Objects.requireNonNull(receivedAt, "a batch needs a received time");
