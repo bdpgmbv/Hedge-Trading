@@ -13,4 +13,6 @@
     <include file="db/changelog/db.changelog-master.sql"/>
     <include file="db/changelog/002-raw-observations.sql"/>
     <include file="db/changelog/003-legacy-positions.sql"/>
+    <include file="db/changelog/004-identity.sql"/>
+    <include file="db/changelog/005-canonical-temporal.sql"/>
 </databaseChangeLog>
